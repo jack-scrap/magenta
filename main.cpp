@@ -24,44 +24,37 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	GLfloat vtc[] = {
-		-1.0f, -1.0f, -1.0f, 
-		-1.0f, -1.0f, 1.0f, 
-		-1.0f, 1.0f, 1.0f, 
-		1.0f, 1.0f, -1.0f, 
-		-1.0f, -1.0f, -1.0f, 
-		-1.0f, 1.0f, -1.0f, 
-		1.0f, -1.0f, 1.0f, 
-		-1.0f, -1.0f, -1.0f, 
-		1.0f, -1.0f, -1.0f, 
-		1.0f, 1.0f, -1.0f, 
-		1.0f, -1.0f, -1.0f, 
-		-1.0f, -1.0f, -1.0f, 
-		-1.0f, -1.0f, -1.0f, 
-		-1.0f, 1.0f, 1.0f, 
-		-1.0f, 1.0f, -1.0f, 
-		1.0f, -1.0f, 1.0f, 
-		-1.0f, -1.0f, 1.0f, 
-		-1.0f, -1.0f, -1.0f, 
-		-1.0f, 1.0f, 1.0f, 
-		-1.0f, -1.0f, 1.0f, 
-		1.0f, -1.0f, 1.0f, 
-		1.0f, 1.0f, 1.0f, 
-		1.0f, -1.0f, -1.0f, 
-		1.0f, 1.0f, -1.0f, 
-		1.0f, -1.0f, -1.0f, 
-		1.0f, 1.0f, 1.0f, 
-		1.0f, -1.0f, 1.0f, 
-		1.0f, 1.0f, 1.0f, 
-		1.0f, 1.0f, -1.0f, 
-		-1.0f, 1.0f, -1.0f, 
-		1.0f, 1.0f, 1.0f, 
-		-1.0f, 1.0f, -1.0f, 
-		-1.0f, 1.0f, 1.0f, 
-		1.0f, 1.0f, 1.0f, 
-		-1.0f, 1.0f, 1.0f, 
-		1.0f, -1.0f, 1.0f
+		-1.0f, -1.0f, 1.0f,
+		1.0f, -1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f,
+		-1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, 1.0f, -1.0f,
+		-1.0f, 1.0f, -1.0f
 	};
 	glBufferData(GL_ARRAY_BUFFER, sizeof vtc, vtc, GL_STATIC_DRAW);
+
+	// index
+	GLuint ibo;
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
+	GLuint idc[] = {
+		0, 1, 2,
+		2, 3, 0,
+		1, 5, 6,
+		6, 2, 1,
+		7, 6, 5,
+		5, 4, 7,
+		4, 0, 3,
+		3, 7, 4,
+		4, 5, 1,
+		1, 0, 4,
+		3, 2, 6,
+		6, 7, 3
+	};
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof idc, idc, GL_STATIC_DRAW);
 
 	// matrix
 	glm::mat4
@@ -97,7 +90,7 @@ int main() {
 
 		disp.clear(0, 0, 0, 1);
 
-		glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
+		glDrawElements(GL_TRIANGLES, sizeof idc / sizeof *idc, GL_UNSIGNED_INT, (GLvoid*) 0);
 
 		disp.update();
 	}
