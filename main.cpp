@@ -83,7 +83,14 @@ int main() {
 	// initialize
 	prog.use();
 
-	while (true) {
+	SDL_Event e;
+	while (disp.open) {
+		while (SDL_PollEvent(&e)) {
+			if (e.type == SDL_QUIT) {
+				SDL_Quit();
+			}
+		}
+
 		glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
 		glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));

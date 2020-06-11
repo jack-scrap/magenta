@@ -10,9 +10,9 @@ class Disp {
 
 		SDL_GLContext ctx;
 
+	public:
 		bool open = false;
 
-	public:
 		Disp(const char* title, int wd, int ht) {
 			SDL_Init(SDL_INIT_EVERYTHING);
 
