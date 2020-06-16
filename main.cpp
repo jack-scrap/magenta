@@ -71,14 +71,10 @@ int main() {
 	glEnableVertexAttribArray(attrPos);
 
 	/// uniform
-	GLint uniProj = glGetUniformLocation(prog._id, "proj");
-	glEnableVertexAttribArray(uniProj);
-
-	GLint uniView = glGetUniformLocation(prog._id, "view");
-	glEnableVertexAttribArray(uniView);
-
-	GLint uniModel = glGetUniformLocation(prog._id, "model");
-	glEnableVertexAttribArray(uniModel);
+	GLint
+		uniProj = glGetUniformLocation(prog._id, "proj"),
+		uniView = glGetUniformLocation(prog._id, "view"),
+		uniModel = glGetUniformLocation(prog._id, "model");
 
 	// initialize
 	prog.use();
