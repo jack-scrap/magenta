@@ -14,12 +14,12 @@ int main() {
 	glCullFace(GL_BACK);
 
 	// data
-	GLuint vao;
+	GLint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 	// position
-	GLuint vbo;
+	GLint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
@@ -36,7 +36,7 @@ int main() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof vtc, vtc, GL_STATIC_DRAW);
 
 	// index
-	GLuint ibo;
+	GLint ibo;
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 

@@ -4,14 +4,14 @@
 
 class Shad {
 	public:
-		GLuint _id;
+		GLint _id;
 
 		Shad(std::string name, bool vtx);
 };
 
 class Prog {
 	public:
-		GLuint _id;
+		GLint _id;
 
 		Prog(std::string vtx, std::string frag);
 
