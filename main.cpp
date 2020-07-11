@@ -24,14 +24,14 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	GLfloat vtc[] = {
-		-1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f
+		-1.0, -1.0, 1.0,
+		1.0, -1.0, 1.0,
+		1.0, 1.0, 1.0,
+		-1.0, 1.0, 1.0,
+		-1.0, -1.0, -1.0,
+		1.0, -1.0, -1.0,
+		1.0, 1.0, -1.0,
+		-1.0, 1.0, -1.0
 	};
 	glBufferData(GL_ARRAY_BUFFER, sizeof vtc, vtc, GL_STATIC_DRAW);
 
