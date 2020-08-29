@@ -87,6 +87,10 @@ int main() {
 	// initialize
 	prog.use();
 
+	glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
+	glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
+
 	SDL_Event e;
 	while (disp.open) {
 		while (SDL_PollEvent(&e)) {
@@ -94,10 +98,6 @@ int main() {
 				SDL_Quit();
 			}
 		}
-
-		glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
-		glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
 		disp.clear(0, 0, 0, 1);
 
