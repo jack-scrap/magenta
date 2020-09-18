@@ -34,6 +34,9 @@ class Disp {
 			}
 
 			open = true;
+
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
 		}
 
 		void clear(float r, float g, float b, float a) {

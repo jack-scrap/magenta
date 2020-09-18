@@ -10,9 +10,6 @@
 int main() {
 	Disp disp("asdf", 800, 600);
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-
 	// data
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
