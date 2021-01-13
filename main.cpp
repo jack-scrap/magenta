@@ -40,7 +40,7 @@ int main() {
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-	GLuint idc[] = {
+	GLuint idc[3 * 2 * 3 * 2] = {
 		0, 1, 2,
 		2, 1, 3,
 
