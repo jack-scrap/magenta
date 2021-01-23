@@ -1,8 +1,7 @@
 #version 400
 
-in vec3 colFrag;
-out vec4 col;
+in vec3 _pos;
 
 void main() {
-	col = vec4(colFrag, 1.0);
+	gl_FragColor = vec4(_pos, 1.0);
 }
