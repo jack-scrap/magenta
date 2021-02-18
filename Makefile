@@ -1,11 +1,23 @@
-cc = g++ 
+CXX = g++
 
-v = -std=c++17
+STATIC = main prog util
+OBJ_STATIC = $(patsubst %, %.o, $(STATIC))
 
-gl = -lGLEW -lGL
-sdl = -lSDL2
+GL = -lGLEW -lGL
+SDL = -lSDL2
+LDFLAGS += $(SDL)
+LDFLAGS += $(GL)
 
-f = main.cpp prog.cpp util.cpp
+all: make
 
-make:
-	$(cc) $(f) $(v) $(gl) $(sdl)
+%.o: %.cpp %.h
+	$(CXX) -c $< -o $@ $(LDFLAGS)
+
+main.o: main.cpp
+	$(CXX) -c $< -o $@ $(LDFLAGS)
+
+make: $(OBJ_STATIC) $(HDR)
+	$(CXX) $^ $(LDFLAGS)
+
+clean:
+	rm *.o a.out
