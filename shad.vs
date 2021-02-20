@@ -5,9 +5,9 @@ in vec3 pos;
 out vec3 _pos;
 
 uniform mat4
-	proj,
+	model,
 	view,
-	model;
+	proj;
 
 void main() {
 	gl_Position = proj * view * model * vec4(pos, 1.0);
