@@ -8,6 +8,8 @@ SDL=-lSDL2
 LDFLAGS+=$(SDL)
 LDFLAGS+=$(GL)
 
+.PHONY: clean
+
 all: make
 
 %.o: %.cpp %.h
