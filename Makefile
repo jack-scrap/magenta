@@ -1,12 +1,12 @@
-CXX = g++
+CXX=g++
 
-STATIC = main disp prog util
-OBJ_STATIC = $(patsubst %, %.o, $(STATIC))
+STATIC=main disp prog util
+OBJ_STATIC=$(patsubst %, %.o, $(STATIC))
 
-GL = -lGLEW -lGL
-SDL = -lSDL2
-LDFLAGS += $(SDL)
-LDFLAGS += $(GL)
+GL=-lGLEW -lGL
+SDL=-lSDL2
+LDFLAGS+=$(SDL)
+LDFLAGS+=$(GL)
 
 all: make
 
