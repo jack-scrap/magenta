@@ -13,6 +13,8 @@
 
 unsigned int t = 0;
 
+const unsigned int fps = 15;
+
 std::vector<std::string> split(std::string buff, char delim) {
 	std::vector<std::string> tok;
 
@@ -273,5 +275,7 @@ int main() {
 		disp.update();
 
 		t++;
+
+		SDL_Delay(1000.0 / fps);
 	}
 }
