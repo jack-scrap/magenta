@@ -97,7 +97,7 @@ class Obj {
 		unsigned int _noIdc;
 
 	public:
-		Obj(GLfloat* vtc, GLushort* idc, unsigned int noIdc) :
+		Obj(GLfloat* vtc, GLushort* idc, unsigned int noIdc, glm::vec3 loc = glm::vec3(0.0)) :
 			_prog("shad", "shad"),
 			_noIdc(noIdc) {
 				// data
@@ -117,6 +117,8 @@ class Obj {
 
 				// matrix
 				glm::mat4 model = glm::mat4(1.0);
+				model = glm::translate(model, loc);
+
 				glm::mat4 view = glm::lookAt(glm::vec3(15, 15, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 				glm::mat4 proj = glm::perspective(glm::radians(45.0), 800.0 / 600.0, 0.1, 100.0);
 
@@ -191,7 +193,7 @@ int main() {
 
 	std::vector<GLfloat> vtcTeapot = rdAttr("teapot", 0);
 	std::vector<GLushort> idcTeapot = rdIdc("teapot", 0);
-	Obj teapot(&vtcTeapot[0], &idcTeapot[0], idcTeapot.size());
+	Obj teapot(&vtcTeapot[0], &idcTeapot[0], idcTeapot.size(), glm::vec3(3.0, 7.0, 0.0));
 
 	// data
 	GLuint vao;
