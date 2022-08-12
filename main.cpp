@@ -117,7 +117,7 @@ class Obj {
 
 				// matrix
 				glm::mat4 model = glm::mat4(1.0);
-				glm::mat4 view = glm::lookAt(glm::vec3(3, 3, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+				glm::mat4 view = glm::lookAt(glm::vec3(15, 15, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 				glm::mat4 proj = glm::perspective(glm::radians(45.0), 800.0 / 600.0, 0.1, 100.0);
 
 				_prog.use();
