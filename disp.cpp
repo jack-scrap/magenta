@@ -21,8 +21,6 @@ Disp::Disp(const char* title, int wd, int ht) {
 	}
 
 	open = true;
-
-	glEnable(GL_DEPTH_TEST);
 }
 
 void Disp::clear(float r, float g, float b, float a) {

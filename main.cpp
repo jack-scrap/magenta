@@ -109,6 +109,39 @@ int main() {
 
 	Obj cube(vtc, idc, sizeof idc / sizeof *idc);
 
+	// data
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	// position
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+	GLfloat vtcBg[3 * 2 * 2] = {
+		-1.0, -1.0,
+		1.0, -1.0,
+		-1.0, 1.0,
+
+		-1.0, 1.0,
+		1.0, -1.0,
+		1.0, 1.0
+	};
+	glBufferData(GL_ARRAY_BUFFER, sizeof vtcBg, vtcBg, GL_STATIC_DRAW);
+
+	// shader
+	Prog prog("scr", "gradient");
+
+	prog.use();
+
+	/// attribute
+	GLint attrPos = glGetAttribLocation(prog._id, "pos");
+	glVertexAttribPointer(attrPos, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*) 0);
+	glEnableVertexAttribArray(attrPos);
+
+	prog.unUse();
+
 	SDL_Event e;
 	while (disp.open) {
 		while (SDL_PollEvent(&e)) {
@@ -118,6 +151,18 @@ int main() {
 		}
 
 		disp.clear(0, 0, 0, 1);
+
+		glDisable(GL_DEPTH_TEST);
+
+		glBindVertexArray(vao);
+		prog.use();
+
+		glDrawArrays(GL_TRIANGLES, 0, 3 * 2);
+
+		prog.unUse();
+		glBindVertexArray(0);
+
+		glEnable(GL_DEPTH_TEST);
 
 		cube.draw();
 
