@@ -11,6 +11,8 @@
 #include "prog.h"
 #include "util.h"
 
+unsigned int t = 0;
+
 std::vector<std::string> split(std::string buff, char delim) {
 	std::vector<std::string> tok;
 
@@ -92,6 +94,8 @@ class Obj {
 		GLuint _vao;
 		GLuint _vbo;
 
+		GLint _uniT;
+
 		Prog _prog;
 
 		unsigned int _noIdc;
@@ -134,6 +138,8 @@ class Obj {
 				GLint uniView = glGetUniformLocation(_prog._id, "view");
 				GLint uniProj = glGetUniformLocation(_prog._id, "proj");
 
+				_uniT = glGetUniformLocation(_prog._id, "t");
+
 				glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 				glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
 				glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
@@ -144,6 +150,8 @@ class Obj {
 		void draw() {
 			glBindVertexArray(_vao);
 			_prog.use();
+
+			glUniform1ui(_uniT, t);
 
 			glDrawElements(GL_TRIANGLES, _noIdc, GL_UNSIGNED_SHORT, (GLvoid*) 0);
 
@@ -259,5 +267,7 @@ int main() {
 		torus.draw();
 
 		disp.update();
+
+		t++;
 	}
 }
