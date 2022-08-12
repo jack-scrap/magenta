@@ -17,8 +17,9 @@ class Obj {
 		unsigned int _noIdc;
 
 	public:
-		Obj() :
-			_prog("shad", "shad") {
+		Obj(GLfloat* vtc, GLushort* idc, unsigned int noIdc) :
+			_prog("shad", "shad"),
+			_noIdc(noIdc) {
 				// data
 				glGenVertexArrays(1, &_vao);
 				glBindVertexArray(_vao);
@@ -26,49 +27,13 @@ class Obj {
 				// position
 				glGenBuffers(1, &_vbo);
 				glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-
-				GLfloat vtc[2 * 2 * 2 * 3];
-				int i = 0;
-				for (int z = 0; z < 2; z++) {
-					for (int y = 0; y < 2; y++) {
-						for (int x = 0; x < 2; x++) {
-							vtc[i] = x ? 1 : -1;
-							vtc[i + 1] = y ? 1 : -1;
-							vtc[i + 2] = z ? 1 : -1;
-
-							i += 3;
-						}
-					}
-				}
-				glBufferData(GL_ARRAY_BUFFER, sizeof vtc, vtc, GL_STATIC_DRAW);
+				glBufferData(GL_ARRAY_BUFFER, _noIdc * 3 * sizeof (GLfloat), vtc, GL_STATIC_DRAW);
 
 				// index
 				GLuint ibo;
 				glGenBuffers(1, &ibo);
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-
-				GLushort idc[3 * 2 * 3 * 2] = {
-					0, 1, 2,
-					2, 1, 3,
-
-					4, 5, 6,
-					6, 5, 7,
-
-					0, 4, 1,
-					1, 4, 5,
-
-					2, 6, 3,
-					3, 6, 7,
-
-					0, 4, 2,
-					2, 4, 6,
-
-					1, 5, 3,
-					3, 5, 7
-				};
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof idc, idc, GL_STATIC_DRAW);
-
-				_noIdc = sizeof idc / sizeof *idc;
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, _noIdc * sizeof (GLushort), idc, GL_STATIC_DRAW);
 
 				// matrix
 				glm::mat4 model = glm::mat4(1.0);
@@ -108,7 +73,41 @@ class Obj {
 int main() {
 	Disp disp("asdf", 800, 600);
 
-	Obj cube;
+	GLfloat vtc[2 * 2 * 2 * 3];
+	int i = 0;
+	for (int z = 0; z < 2; z++) {
+		for (int y = 0; y < 2; y++) {
+			for (int x = 0; x < 2; x++) {
+				vtc[i] = x ? 1 : -1;
+				vtc[i + 1] = y ? 1 : -1;
+				vtc[i + 2] = z ? 1 : -1;
+
+				i += 3;
+			}
+		}
+	}
+
+	GLushort idc[3 * 2 * 3 * 2] = {
+		0, 1, 2,
+		2, 1, 3,
+
+		4, 5, 6,
+		6, 5, 7,
+
+		0, 4, 1,
+		1, 4, 5,
+
+		2, 6, 3,
+		3, 6, 7,
+
+		0, 4, 2,
+		2, 4, 6,
+
+		1, 5, 3,
+		3, 5, 7
+	};
+
+	Obj cube(vtc, idc, sizeof idc / sizeof *idc);
 
 	SDL_Event e;
 	while (disp.open) {
