@@ -101,7 +101,7 @@ class Obj {
 		unsigned int _noIdc;
 
 	public:
-		Obj(GLfloat* vtc, GLushort* idc, unsigned int noIdc, glm::vec3 loc = glm::vec3(0.0)) :
+		Obj(GLfloat* vtc, GLushort* idc, unsigned int noIdc, glm::vec3 loc = glm::vec3(0.0), glm::vec3 rot = glm::vec3(0.0)) :
 			_prog("shad", "shad"),
 			_noIdc(noIdc) {
 				// data
@@ -122,6 +122,10 @@ class Obj {
 				// matrix
 				glm::mat4 model = glm::mat4(1.0);
 				model = glm::translate(model, loc);
+
+				glm::quat quat = glm::quat(rot);
+
+				model *= glm::mat4_cast(quat);
 
 				glm::mat4 view = glm::lookAt(glm::vec3(15, 15, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 				glm::mat4 proj = glm::perspective(glm::radians(45.0), 800.0 / 600.0, 0.1, 100.0);
