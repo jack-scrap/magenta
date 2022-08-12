@@ -155,6 +155,39 @@ class Obj {
 int main() {
 	Disp disp("asdf", 800, 600);
 
+	// data
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	// position
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+	GLfloat vtcBg[3 * 2 * 2] = {
+		-1.0, -1.0,
+		1.0, -1.0,
+		-1.0, 1.0,
+
+		-1.0, 1.0,
+		1.0, -1.0,
+		1.0, 1.0
+	};
+	glBufferData(GL_ARRAY_BUFFER, sizeof vtcBg, vtcBg, GL_STATIC_DRAW);
+
+	// shader
+	Prog prog("scr", "gradient");
+
+	prog.use();
+
+	/// attribute
+	GLint attrPos = glGetAttribLocation(prog._id, "pos");
+	glVertexAttribPointer(attrPos, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*) 0);
+	glEnableVertexAttribArray(attrPos);
+
+	prog.unUse();
+
 	GLfloat vtc[2 * 2 * 2 * 3];
 	int i = 0;
 	for (int z = 0; z < 2; z++) {
@@ -194,39 +227,6 @@ int main() {
 	std::vector<GLfloat> vtcTeapot = rdAttr("teapot", 0);
 	std::vector<GLushort> idcTeapot = rdIdc("teapot", 0);
 	Obj teapot(&vtcTeapot[0], &idcTeapot[0], idcTeapot.size(), glm::vec3(3.0, 7.0, 0.0));
-
-	// data
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	// position
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-	GLfloat vtcBg[3 * 2 * 2] = {
-		-1.0, -1.0,
-		1.0, -1.0,
-		-1.0, 1.0,
-
-		-1.0, 1.0,
-		1.0, -1.0,
-		1.0, 1.0
-	};
-	glBufferData(GL_ARRAY_BUFFER, sizeof vtcBg, vtcBg, GL_STATIC_DRAW);
-
-	// shader
-	Prog prog("scr", "gradient");
-
-	prog.use();
-
-	/// attribute
-	GLint attrPos = glGetAttribLocation(prog._id, "pos");
-	glVertexAttribPointer(attrPos, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*) 0);
-	glEnableVertexAttribArray(attrPos);
-
-	prog.unUse();
 
 	SDL_Event e;
 	while (disp.open) {
