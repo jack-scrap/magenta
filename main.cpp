@@ -2,10 +2,90 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
 
 #include "disp.h"
 #include "prog.h"
 #include "util.h"
+
+std::vector<std::string> split(std::string buff, char delim) {
+	std::vector<std::string> tok;
+
+	std::stringstream s(buff);
+	std::string seg;
+	while (std::getline(s, seg, delim)) {
+		tok.push_back(seg);
+	}
+
+	return tok;
+}
+
+std::vector<std::string> rd(std::string fName) {
+	std::ifstream in;
+	in.open(fName);
+
+	std::vector<std::string> cont;
+
+	for (std::string l; std::getline(in, l);) {
+		cont.push_back(l);
+	}
+
+	in.close();
+
+	return cont;
+}
+
+std::vector<GLfloat> rdAttr(std::string fName, unsigned int attr) {
+	const std::string id[3] = {
+		"v",
+		"vt",
+		"vn"
+	};
+	const unsigned int sz[3] = {
+		3,
+		2,
+		3
+	};
+
+	std::vector<std::string> buff = rd("res/" + fName + ".obj");
+
+	std::vector<GLfloat> cont;
+	for (int l = 0; l < buff.size(); l++) {
+		std::vector<std::string> tok = split(buff[l], ' ');
+		if (tok[0] == id[attr]) {
+			for (int i = 1; i < 1 + sz[attr]; i++) {
+				std::stringstream out;
+				out << std::fixed << std::setprecision(4) << std::stof(tok[i]);
+
+				cont.push_back(std::stof(out.str()));
+			}
+		}
+	}
+
+	return cont;
+}
+
+std::vector<GLushort> rdIdc(std::string fName, unsigned int attr) {
+	std::vector<std::string> buff = rd("res/" + fName + ".obj");
+
+	std::vector<GLushort> cont;
+	for (int l = 0; l < buff.size(); l++) {
+		std::vector<std::string> tok = split(buff[l], ' ');
+
+		if (tok[0] == "f") {
+			for (int i = 1; i < 1 + 3; i++) {
+				std::vector<std::string> type = split(tok[i], '/');
+
+				cont.push_back(std::stoi(type[attr]) - 1);
+			}
+		}
+	}
+
+	return cont;
+}
 
 class Obj {
 	private:
@@ -109,6 +189,10 @@ int main() {
 
 	Obj cube(vtc, idc, sizeof idc / sizeof *idc);
 
+	std::vector<GLfloat> vtcTeapot = rdAttr("teapot", 0);
+	std::vector<GLushort> idcTeapot = rdIdc("teapot", 0);
+	Obj teapot(&vtcTeapot[0], &idcTeapot[0], idcTeapot.size());
+
 	// data
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
@@ -165,6 +249,7 @@ int main() {
 		glEnable(GL_DEPTH_TEST);
 
 		cube.draw();
+		teapot.draw();
 
 		disp.update();
 	}
