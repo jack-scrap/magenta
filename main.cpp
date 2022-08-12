@@ -228,6 +228,10 @@ int main() {
 	std::vector<GLushort> idcTeapot = rdIdc("teapot", 0);
 	Obj teapot(&vtcTeapot[0], &idcTeapot[0], idcTeapot.size(), glm::vec3(3.0, 7.0, 0.0));
 
+	std::vector<GLfloat> vtcTorus = rdAttr("Torus", 0);
+	std::vector<GLushort> idcTorus = rdIdc("Torus", 0);
+	Obj torus(&vtcTorus[0], &idcTorus[0], idcTorus.size(), glm::vec3(0.0, 5.0, 0.0));
+
 	SDL_Event e;
 	while (disp.open) {
 		while (SDL_PollEvent(&e)) {
@@ -252,6 +256,7 @@ int main() {
 
 		cube.draw();
 		teapot.draw();
+		torus.draw();
 
 		disp.update();
 	}
